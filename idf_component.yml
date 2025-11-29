@@ -1,0 +1,38 @@
+version: "1.0.0"
+description: "E-Paper display driver library for ESP32 supporting 2.13 inch SSD1680-based displays"
+url: https://github.com/YOUR_USERNAME/esp32-epaper-lib
+documentation: https://github.com/YOUR_USERNAME/esp32-epaper-lib/blob/main/README.md
+issues: https://github.com/YOUR_USERNAME/esp32-epaper-lib/issues
+repository: https://github.com/YOUR_USERNAME/esp32-epaper-lib.git
+
+dependencies:
+  idf:
+    version: ">=5.0"
+
+targets:
+  - esp32
+  - esp32s2
+  - esp32s3
+  - esp32c3
+  - esp32c6
+  - esp32h2
+
+maintainers:
+  - name: "Your Name"
+    email: "your.email@example.com"
+
+license: MIT
+
+tags:
+  - display
+  - epaper
+  - eink
+  - ssd1680
+  - graphics
+  - gui
+
+files:
+  exclude:
+    - "**/.git/**"
+    - "**/build/**"
+    - "**/*.pyc"

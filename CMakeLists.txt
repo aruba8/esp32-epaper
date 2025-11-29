@@ -1,0 +1,16 @@
+idf_component_register(
+    SRCS
+        "EPD_2in13.c"
+        "DEV_Config.c"
+        "GUI_Paint.c"
+        "fonts/font8.c"
+        "fonts/font12.c"
+        "fonts/font16.c"
+        "fonts/font20.c"
+        "fonts/font24.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        driver
+        esp_timer
+)

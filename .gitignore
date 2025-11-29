@@ -1,0 +1,42 @@
+# Build artifacts
+build/
+build_test/build/
+*.o
+*.a
+*.so
+*.elf
+*.bin
+*.map
+
+# ESP-IDF specific
+sdkconfig
+sdkconfig.old
+build_test/sdkconfig
+build_test/sdkconfig.old
+.config
+
+# Python
+*.pyc
+__pycache__/
+*.egg-info/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+dependencies.lock
+managed_components/
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Test artifacts
+*.log
+test_results/
+coverage/
