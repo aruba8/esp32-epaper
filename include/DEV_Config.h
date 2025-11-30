@@ -24,6 +24,18 @@
 #define UDOUBLE uint32_t
 
 /**
+ * Pin configuration structure
+ **/
+typedef struct {
+    int rst_pin;
+    int dc_pin;
+    int cs_pin;
+    int busy_pin;
+    int clk_pin;
+    int mosi_pin;
+} epd_pin_config_t;
+
+/**
  * GPIO config
  **/
 extern int EPD_RST_PIN;
@@ -41,7 +53,7 @@ void DEV_SPI_WriteByte(UBYTE Value);
 void DEV_SPI_Write_nByte(uint8_t *pData, uint32_t Len);
 void DEV_Delay_ms(UDOUBLE xms);
 
-UBYTE DEV_Module_Init(void);
+UBYTE DEV_Module_Init(const epd_pin_config_t *pin_config);
 void DEV_Module_Exit(void);
 
 #endif

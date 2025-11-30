@@ -21,7 +21,7 @@ A complete e-paper display driver library for ESP32/ESP32-C6 microcontrollers, s
 
 ## Hardware Connections
 
-Default GPIO configuration for ESP32-C6:
+Example GPIO configuration for ESP32-C6:
 
 | E-Paper Pin | ESP32-C6 GPIO | Description |
 |-------------|---------------|-------------|
@@ -32,7 +32,7 @@ Default GPIO configuration for ESP32-C6:
 | CLK         | GPIO 6        | SPI Clock   |
 | DIN (MOSI)  | GPIO 7        | SPI MOSI    |
 
-> **Note:** These pins can be customized in `DEV_Config.c`
+> **Note:** Pins are configured at the application level. You can use any available GPIOs for your hardware setup.
 
 ## Installation
 
@@ -76,8 +76,18 @@ idf_component_register(
 
 void app_main(void)
 {
-    // Initialize hardware
-    DEV_Module_Init();
+    // Configure pins for your hardware
+    epd_pin_config_t pin_config = {
+        .rst_pin = GPIO_NUM_4,
+        .dc_pin = GPIO_NUM_9,
+        .cs_pin = GPIO_NUM_10,
+        .busy_pin = GPIO_NUM_18,
+        .clk_pin = GPIO_NUM_6,
+        .mosi_pin = GPIO_NUM_7
+    };
+
+    // Initialize hardware with pin configuration
+    DEV_Module_Init(&pin_config);
 
     // Allocate image buffer
     UBYTE *image = (UBYTE *)malloc(IMAGE_SIZE);
@@ -156,23 +166,26 @@ Paint_NewImage(image, EPD_2IN13_WIDTH, EPD_2IN13_HEIGHT, ROTATE_90, WHITE);
 
 Rotation options: `ROTATE_0`, `ROTATE_90`, `ROTATE_180`, `ROTATE_270`
 
-## Hardware Abstraction Layer
+## Pin Configuration
 
-To port to different ESP32 variants, modify `DEV_Config.c`:
+Pins are configured at the application level using the `epd_pin_config_t` structure. This allows you to easily adapt the library to different hardware setups without modifying library code:
 
 ```c
-static void DEV_GPIO_Init(void)
-{
-    EPD_RST_PIN  = GPIO_NUM_4;   // Your RST pin
-    EPD_DC_PIN   = GPIO_NUM_9;   // Your DC pin
-    EPD_BUSY_PIN = GPIO_NUM_18;  // Your BUSY pin
-    EPD_CS_PIN   = GPIO_NUM_10;  // Your CS pin
-    EPD_CLK_PIN  = GPIO_NUM_6;   // Your CLK pin
-    EPD_MOSI_PIN = GPIO_NUM_7;   // Your MOSI pin
+// Define your pin configuration
+epd_pin_config_t pin_config = {
+    .rst_pin = GPIO_NUM_4,    // Your RST pin
+    .dc_pin = GPIO_NUM_9,     // Your DC pin
+    .cs_pin = GPIO_NUM_10,    // Your CS pin
+    .busy_pin = GPIO_NUM_18,  // Your BUSY pin
+    .clk_pin = GPIO_NUM_6,    // Your CLK pin
+    .mosi_pin = GPIO_NUM_7    // Your MOSI pin
+};
 
-    // ... configure GPIO
-}
+// Pass configuration to initialization
+DEV_Module_Init(&pin_config);
 ```
+
+This approach keeps the library hardware-agnostic and makes it easy to support different board layouts.
 
 ## Logging and Debugging
 
@@ -246,6 +259,7 @@ See the `examples/` directory for complete demo applications:
 
 Based on e-Paper reference implementations, adapted for ESP-IDF:
 - Display documentation: [WeActStudio](https://github.com/WeActStudio/WeActStudio.EpaperModule)
+- Inspired by Waveshare e-Paper Library
 
 ## License
 
@@ -272,5 +286,4 @@ Tested on ESP-IDF v5.0+
 ## Support
 
 For issues and questions:
-- GitHub Issues: https://github.com/YOUR_USERNAME/esp32-epaper-lib/issues
-- Documentation: See `docs/` directory
+- GitHub Issues: https://github.com/aruba8/esp32-epaper-lib/issues

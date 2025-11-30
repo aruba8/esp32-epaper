@@ -102,14 +102,14 @@ static void DEV_GPIO_Mode(UWORD Pin, UWORD Mode)
     gpio_config(&io_conf);
 }
 
-static void DEV_GPIO_Init(void)
+static void DEV_GPIO_Init(const epd_pin_config_t *pin_config)
 {
-    EPD_RST_PIN = GPIO_NUM_4;
-    EPD_DC_PIN = GPIO_NUM_9;
-    EPD_BUSY_PIN = GPIO_NUM_18;
-    EPD_CS_PIN = GPIO_NUM_10;
-    EPD_CLK_PIN = GPIO_NUM_6;
-    EPD_MOSI_PIN = GPIO_NUM_7;
+    EPD_RST_PIN = pin_config->rst_pin;
+    EPD_DC_PIN = pin_config->dc_pin;
+    EPD_BUSY_PIN = pin_config->busy_pin;
+    EPD_CS_PIN = pin_config->cs_pin;
+    EPD_CLK_PIN = pin_config->clk_pin;
+    EPD_MOSI_PIN = pin_config->mosi_pin;
 
     DEV_GPIO_Mode(EPD_RST_PIN, 1);
     DEV_GPIO_Mode(EPD_DC_PIN, 1);
@@ -121,15 +121,20 @@ static void DEV_GPIO_Init(void)
 
 /******************************************************************************
 function:	Module Initialize, the library and initialize the pins, SPI protocol
-parameter:
+parameter:  pin_config - Pin configuration structure from application
 Info:
 ******************************************************************************/
-UBYTE DEV_Module_Init(void)
+UBYTE DEV_Module_Init(const epd_pin_config_t *pin_config)
 {
+    if (pin_config == NULL) {
+        ESP_LOGE(TAG, "Pin configuration is NULL");
+        return 1;
+    }
+
     ESP_LOGI(TAG, "Initializing device module...");
 
     // GPIO Config
-    DEV_GPIO_Init();
+    DEV_GPIO_Init(pin_config);
 
     // SPI Config
     spi_bus_config_t bus_cfg = {

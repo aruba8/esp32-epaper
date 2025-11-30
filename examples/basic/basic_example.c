@@ -30,8 +30,18 @@ void app_main(void)
 {
     ESP_LOGI(TAG, "=== E-Paper Basic Example ===");
 
-    // Initialize hardware module
-    if (DEV_Module_Init() != 0) {
+    // Configure pins at application level
+    epd_pin_config_t pin_config = {
+        .rst_pin = GPIO_NUM_4,
+        .dc_pin = GPIO_NUM_9,
+        .cs_pin = GPIO_NUM_10,
+        .busy_pin = GPIO_NUM_18,
+        .clk_pin = GPIO_NUM_6,
+        .mosi_pin = GPIO_NUM_7
+    };
+
+    // Initialize hardware module with pin configuration
+    if (DEV_Module_Init(&pin_config) != 0) {
         ESP_LOGE(TAG, "Failed to initialize device module");
         return;
     }
