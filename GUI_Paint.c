@@ -287,7 +287,7 @@ void Paint_DrawPoint(UWORD Xpoint, UWORD Ypoint, UWORD Color,
 {
     if (Xpoint > Paint.Width || Ypoint > Paint.Height)
     {
-        ESP_LOGW(TAG, "DrawPoint at (%d,%d) exceeds display range", X, Y);
+        ESP_LOGW(TAG, "DrawPoint at (%d,%d) exceeds display range", Xpoint, Ypoint);
         return;
     }
 
@@ -516,7 +516,7 @@ void Paint_DrawChar(UWORD Xpoint, UWORD Ypoint, const char Acsii_Char,
 
     if (Xpoint > Paint.Width || Ypoint > Paint.Height)
     {
-        ESP_LOGW(TAG, "DrawChar at (%d,%d) exceeds display range", X, Y);
+        ESP_LOGW(TAG, "DrawChar at (%d,%d) exceeds display range", Xpoint, Ypoint);
         return;
     }
 
@@ -638,7 +638,7 @@ void Paint_DrawNum(UWORD Xpoint, UWORD Ypoint, int32_t Nummber,
 
     if (Xpoint > Paint.Width || Ypoint > Paint.Height)
     {
-        ESP_LOGW(TAG, "DrawNum at (%d,%d) exceeds display range", X, Y);
+        ESP_LOGW(TAG, "DrawNum at (%d,%d) exceeds display range", Xpoint, Ypoint);
         return;
     }
 
