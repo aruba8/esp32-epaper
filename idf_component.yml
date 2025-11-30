@@ -18,8 +18,7 @@ targets:
   - esp32h2
 
 maintainers:
-  - name: "Your Name"
-    email: "your.email@example.com"
+  - name: "aruba8"
 
 license: MIT
 
